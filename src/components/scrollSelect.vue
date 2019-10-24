@@ -4,12 +4,11 @@
       滚轮选择器选中的是：{{addressDate.province}}-{{addressDate.city}}-{{addressDate.area}}
     </div>
     <div class="scroll-select-box">
-      <div class="scroll-select-box-btn">
-        <div @click="$emit('click')">取消</div>
-        <div @click="determine">确定</div>
-      </div>
+      <div class="scroll-select-box-title">滚筒选择器</div>
       <div class="scroll-select-list">
-        <scroll-select-list :listData="listData"></scroll-select-list>
+        <scroll-select-list :listData="listData" @pickSelect="pickSelect($event, 'first')"></scroll-select-list>
+        <scroll-select-list :listData="listData" @pickSelect="pickSelect($event, 'second')"></scroll-select-list>
+        <scroll-select-list :listData="listData" @pickSelect="pickSelect($event, 'third')"></scroll-select-list>
       </div>
     </div>
   </section>
@@ -39,6 +38,16 @@ export default {
     determine() {
       console.log(this.addressDate);
     },
+
+    pickSelect(val, type) {
+      if (type === 'first') {
+        this.addressDate.province = val;
+      } else if (type === 'second') {
+        this.addressDate.city = val;
+      } else if (type === 'third') {
+        this.addressDate.area = val;
+      }
+    },
   },
 }
 </script>
@@ -52,18 +61,21 @@ export default {
     width: 100%;
     height: 270px;
 
-    &-btn {
+    &-title {
       border-top: 1px solid #dcdcdc;
       border-bottom: 1px solid #dcdcdc;
-      display: flex;
-      padding: 0 12px;
-      justify-content: space-between;
-      align-items: center;
+      text-align: center;
       height: 50px;
+      line-height: 50px;
       font-size: 18px;
       color: #3f91f6;
       box-sizing: border-box;
     }
+  }
+
+  &-list {
+    display: flex;
+    justify-content: space-around;
   }
 }
 </style>
